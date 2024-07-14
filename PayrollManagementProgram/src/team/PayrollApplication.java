@@ -1,3 +1,5 @@
+package team;
+
 public class PayrollApplication {
     public static void main(String[] args) {
         PayrollSystem payrollSystem = new PayrollSystem();

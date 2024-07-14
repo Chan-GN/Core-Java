@@ -1,3 +1,5 @@
+package my;
+
 public class OutputHandler {
     void printEmployeesInfo(Employee[] employees) {
         System.out.println("                     <<급여관리프로그램>>");
@@ -10,14 +12,7 @@ public class OutputHandler {
             if (employee == null) {
                 break;
             }
-            System.out.printf("%-8d %-6d %-4d %-8d %-10d %-8d %-12d%n",
-                    employee.getEmpId(),
-                    employee.getGrade(),
-                    employee.getSalaryClass(),
-                    employee.getExtraPay(),
-                    employee.getTotalSalary(),
-                    employee.getTax(),
-                    employee.getNetAmount());
+            System.out.println(employee.getBasicInfo() + " " + employee.getSalaryInfo());
         }
         System.out.println("------------------------------------------------------------");
         System.out.println();
@@ -26,9 +21,7 @@ public class OutputHandler {
             if (employee == null) {
                 break;
             }
-            System.out.printf("%-5d%-5d%-5d%-10d%n",
-                    employee.getEmpId(), employee.getGrade(), employee.getSalaryClass(),
-                    employee.getExtraPay());
+            System.out.println(employee.getInputDataInfo());
         }
     }
 }

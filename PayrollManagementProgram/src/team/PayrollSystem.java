@@ -1,3 +1,5 @@
+package team;
+
 public class PayrollSystem {
     private static int getBaseSalary(int grade, int salaryClass) {
         if (grade == 1) {

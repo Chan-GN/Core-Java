@@ -1,3 +1,5 @@
+package my;
+
 import java.util.Scanner;
 
 public class InputHandler {

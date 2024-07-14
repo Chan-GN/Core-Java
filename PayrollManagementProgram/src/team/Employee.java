@@ -1,3 +1,5 @@
+package team;
+
 public class Employee {
     private int empId; // 사원 번호
     private int grade; // 급
@@ -83,7 +85,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "team.Employee{" +
                 "empId=" + empId +
                 ", grade=" + grade +
                 ", salaryClass=" + salaryClass +
