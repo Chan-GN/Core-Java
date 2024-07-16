@@ -1,25 +1,23 @@
 package inner_class;
 
-public class OuterClass2 {
-    private static int b = 10;
-    private int a = 5;
-
+public class OuterClass3 {
     public static void main(String[] args) {
-        OuterClass2.InnerClass2 innerClass = new OuterClass2.InnerClass2();
-        innerClass.display();
-        InnerClass2.printSomething();
+        OuterClass3 outerClass3 = new OuterClass3();
+        outerClass3.display();
     }
 
-    private static class InnerClass2 {
-        private static int d = 500;
-        private int c = 100;
+    private void display() {
+        int a = 5;
+        class InnerClass3 { // Local Inner Class, 변수로 생각하기
+            static int c = 500; // Local Inner Class's Class Variable
+            int b = 100; // Local Inner Class's Instance Variable
 
-        public static void printSomething() {
-            System.out.println(b + ", " + d);
-        }
+            public void doSomething() {
 
-        public void display() {
-            System.out.println(b + ", " + c + ", " + d);
+            }
         }
+        InnerClass3 innerClass = new InnerClass3();
+        System.out.println(InnerClass3.c);
+        System.out.println(innerClass.b); // Cause b is Instance Variable
     }
 }

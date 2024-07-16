@@ -1,4 +1,4 @@
-package _interface;
+package _interface.payment;
 
 // PayPal 결제 구현
 class PayPalPayment implements PaymentMethod {

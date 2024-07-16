@@ -1,4 +1,4 @@
-package _interface;
+package _interface.payment;
 
 public class PaymentExample {
     public static void main(String[] args) {

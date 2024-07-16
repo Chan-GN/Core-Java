@@ -1,28 +1,29 @@
 package inner_class;
 
-public class OuterClass {
+public class OuterClass1 {
+    private static int b = 10;
+    private int a = 5;
+
     public static void main(String[] args) {
-        OuterClass outerClass = new OuterClass();
-        InnerClass innerClass = outerClass.new InnerClass();
+        OuterClass1 outerClass = new OuterClass1();
+        InnerClass1 innerClass = outerClass.new InnerClass1();
 
         System.out.println(innerClass.c);
-        System.out.println(InnerClass.d);
+        System.out.println(InnerClass1.d);
         innerClass.display();
-        InnerClass.printSomething();
+        InnerClass1.printSomething();
     }
 
-    private int a = 5;
-    private static int b = 10;
-    private class InnerClass {
-        private int c = 100;
+    private class InnerClass1 {
         private static int d = 500;
-
-        public void display() {
-            System.out.println(a + ", " + b + ", " + c + ", " + d);
-        }
+        private int c = 100;
 
         public static void printSomething() {
             System.out.println(b + ", " + d);
+        }
+
+        public void display() {
+            System.out.println(a + ", " + b + ", " + c + ", " + d);
         }
     }
 }

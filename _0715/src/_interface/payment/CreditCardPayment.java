@@ -1,4 +1,4 @@
-package _interface;
+package _interface.payment;
 
 // 신용카드 결제 구현
 class CreditCardPayment implements PaymentMethod {

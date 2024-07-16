@@ -1,4 +1,4 @@
-package _interface;
+package _interface.payment;
 
 // 결제 처리를 담당하는 클래스
 class PaymentProcessor {

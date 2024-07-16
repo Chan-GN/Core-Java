@@ -1,3 +1,5 @@
+package _abstract;
+
 public class AbstractDemo1 extends Normal1 {
     public AbstractDemo1(String name) {
         super(name);
@@ -19,10 +21,6 @@ abstract class Normal1 {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

@@ -1,6 +1,6 @@
-package _interface.car;
+package _interface;
 
-public class InterfaceDemo {
+public class InterfaceDemo1 {
     public static void main(String[] args) {
         Car c1 = new Car("EF소나타", 30_000_000);
         Car c2 = new Car("RedMatiz", 10_000_000);
