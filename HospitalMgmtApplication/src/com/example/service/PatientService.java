@@ -1,9 +1,13 @@
 package com.example.service;
 
+import com.example.model.MedicalDepartment;
 import com.example.model.PatientDAO;
 import com.example.model.PatientDTO;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class PatientService {
 
@@ -17,6 +21,46 @@ public class PatientService {
         PatientDTO updated = calculateFee(patientDTO);
 
         return patientDAO.createPatient(updated);
+    }
+
+    public boolean deletePatient(int number) throws SQLException {
+        return patientDAO.deletePatient(number);
+    }
+
+    public List<PatientDTO> readAllPatients() throws SQLException {
+        return patientDAO.readAllPatients();
+    }
+
+    public Optional<PatientDTO> readOnePatient(int number) throws SQLException {
+        return patientDAO.readOnePatient(number);
+    }
+
+    public boolean updatePatient(PatientDTO patientDTO, Map<String, Object> updates) throws SQLException {
+        // 진료 코드(부서) 업데이트
+        if (updates.containsKey("treatmentCode")) {
+            MedicalDepartment newDepartment = (MedicalDepartment) updates.get("treatmentCode");
+            if (newDepartment != null && !newDepartment.equals(patientDTO.getTreatmentCode())) {
+                patientDTO.updateTreatmentCode(newDepartment);
+            }
+        }
+
+        // 입원 일수 업데이트
+        if (updates.containsKey("lengthOfStay")) {
+            int newDays = (int) updates.get("lengthOfStay");
+            if (newDays >= 0 && newDays != patientDTO.getLengthOfStay()) {
+                patientDTO.updateLengthOfStay(newDays);
+            }
+        }
+
+        // 나이 업데이트
+        if (updates.containsKey("age")) {
+            int newAge = (int) updates.get("age");
+            if (newAge > 0 && newAge != patientDTO.getAge()) {
+                patientDTO.setAge(newAge);
+            }
+        }
+
+        return patientDAO.updatePatient(calculateFee(patientDTO));
     }
 
     private PatientDTO calculateFee(PatientDTO patientDTO) {

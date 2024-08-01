@@ -10,11 +10,11 @@ import java.util.Properties;
 
 public class DBConnection {
 
-    private final Properties info;
+    private static final Properties info = new Properties();
+    private static final String CONFIG_FILE = "resources/dbinfo.properties";
 
-    public DBConnection() {
-        info = new Properties();
-        File file = new File("resources/dbinfo.properties");
+    static {
+        File file = new File(CONFIG_FILE);
         try {
             info.load(new FileInputStream(file));
         } catch (IOException e) {
@@ -22,20 +22,21 @@ public class DBConnection {
         }
     }
 
-    public Connection getConnection() {
-        Connection conn = null;
+    private DBConnection() {
+
+    }
+
+    public static Connection getConnection() throws SQLException {
         try {
-            Class.forName(info.getProperty("DB_DRIVER"));
-            conn = DriverManager.getConnection(
+            // Class.forName(info.getProperty("DB_DRIVER"));
+            return DriverManager.getConnection(
                     info.getProperty("DB_URL"),
                     info.getProperty("DB_USER"),
                     info.getProperty("DB_PASSWD")
             );
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            throw new SQLException("데이터베이스 연결 정보가 불완전합니다.");
         }
-
-        return conn;
     }
 
 }

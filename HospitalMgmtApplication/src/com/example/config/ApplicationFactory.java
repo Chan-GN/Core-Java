@@ -1,6 +1,9 @@
 package com.example.config;
 
+import com.example.controller.DeleteController;
 import com.example.controller.InsertController;
+import com.example.controller.SelectController;
+import com.example.controller.UpdateController;
 import com.example.model.PatientDAO;
 import com.example.model.PatientDaoImpl;
 import com.example.service.PatientService;
@@ -12,7 +15,11 @@ public class ApplicationFactory {
         PatientDAO patientDAO = new PatientDaoImpl();
         PatientService patientService = new PatientService(patientDAO);
         InsertController insertController = new InsertController(patientService);
-        return new PatientView(insertController);
+        DeleteController deleteController = new DeleteController(patientService);
+        SelectController selectController = new SelectController(patientService);
+        UpdateController updateController = new UpdateController(patientService);
+
+        return new PatientView(insertController, deleteController, selectController, updateController);
     }
 
 }
