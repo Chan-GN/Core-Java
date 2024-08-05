@@ -1,6 +1,7 @@
 package main.model;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 작성자: 이요한
@@ -13,5 +14,7 @@ public interface EmployeeDAO {
     boolean save(EmployeeDTO employeeDTO);
 
     List<EmployeeDTO> findAll();
+
+    Optional<EmployeeDTO> findById(String id);
 
 }

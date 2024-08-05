@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 작성자: 이요한
@@ -21,11 +22,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             INSERT INTO employee
             VALUES (?, ?, ?, ?, ?, ?, ?)""";
     private static final String FIND_ALL_SQL = "SELECT * FROM employee";
+    private static final String FIND_BY_ID_SQL = "SELECT * FROM employee WHERE id = ?";
 
-    private final DbUtil dbUtil;
+    private DbUtil dbUtil;
 
     public EmployeeDAOImpl() {
         this.dbUtil = new DbUtil();
+    }
+
+    public EmployeeDAOImpl(DbUtil dbUtil) {
+        this.dbUtil = dbUtil;
     }
 
     private static List<EmployeeDTO> getAllEmployees(ResultSet rs) throws SQLException {
@@ -103,6 +109,38 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         pstmt.setInt(7, employee.getGradeAllowanceCode());
 
         return pstmt.executeUpdate() == 1;
+    }
+
+    @Override
+    public Optional<EmployeeDTO> findById(String id) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = dbUtil.getConnection();
+            pstmt = conn.prepareStatement(FIND_BY_ID_SQL);
+            pstmt.setString(1, id);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return Optional.of(new EmployeeDTO(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getInt("basic_salary_code"),
+                        rs.getInt("night_hours"),
+                        rs.getInt("number_of_family_members"),
+                        DepartmentCode.valueOf(rs.getString("department_code")),
+                        rs.getInt("grade_allowance_code")
+                ));
+            }
+            return Optional.empty(); // Employee not found
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            dbUtil.close(conn, pstmt, rs);
+        }
     }
 
 }

@@ -22,6 +22,10 @@ public class DbUtil {
         this.properties = new Properties();
     }
 
+    public DbUtil(Properties properties) {
+        this.properties = properties;
+    }
+
     public Connection getConnection() {
         return getConnection(DEFAULT_DB_PROPERTIES_PATH);
     }

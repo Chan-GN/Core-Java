@@ -1,11 +1,13 @@
 package main.controller;
 
+import main.exception.EmployeeNotFoundException;
 import main.model.EmployeeDAO;
 import main.model.EmployeeDTO;
 import main.model.EmployeeOutputDTO;
 import main.util.CalculateUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -24,35 +26,45 @@ public class SelectController {
 
     public List<EmployeeOutputDTO> getAllEmployees() {
         List<EmployeeDTO> employees = employeeDAO.findAll();
-
-        return convert(employees);
+        return transformToOutputDTOs(employees);
     }
 
-    private List<EmployeeOutputDTO> convert(List<EmployeeDTO> employees) {
-        return employees.stream()
-                .map(e -> {
-                    int gradeAllowanceSalary = CalculateUtils.calculateGradeAllowanceSalary(e.getGradeAllowanceCode());
-                    int nightAllowance = CalculateUtils.calculateNightAllowance(e.getNightHours());
-                    int familyAllowance = CalculateUtils.calculateFamilyAllowance(e.getNumberOfFamilyMembers());
-                    int basicSalary = CalculateUtils.calculateBasicSalary(e.getBasicSalaryCode());
-                    int totalAmount = CalculateUtils.calculateTotalAmount(
-                            gradeAllowanceSalary, basicSalary, nightAllowance, familyAllowance
-                    );
-                    int netIncome = CalculateUtils.calculateNetIncome(gradeAllowanceSalary, totalAmount);
+    public EmployeeOutputDTO getEmployeeById(String id) throws EmployeeNotFoundException {
+        Optional<EmployeeDTO> employee = employeeDAO.findById(id);
+        if (employee.isEmpty()) {
+            throw new EmployeeNotFoundException("해당 사원이 존재하지 않습니다.");
+        }
 
-                    return new EmployeeOutputDTO(
-                            e.getId(),
-                            e.getName(),
-                            e.getDepartmentCode().description(),
-                            e.getBasicSalaryCode(),
-                            gradeAllowanceSalary,
-                            familyAllowance,
-                            nightAllowance,
-                            totalAmount,
-                            netIncome
-                    );
-                })
+        return transformToOutputDTO(employee.get());
+    }
+
+    private List<EmployeeOutputDTO> transformToOutputDTOs(List<EmployeeDTO> employees) {
+        return employees.stream()
+                .map(this::transformToOutputDTO)
                 .collect(Collectors.toList());
+    }
+
+    private EmployeeOutputDTO transformToOutputDTO(EmployeeDTO e) {
+        int gradeAllowanceSalary = CalculateUtils.calculateGradeAllowanceSalary(e.getGradeAllowanceCode());
+        int nightAllowance = CalculateUtils.calculateNightAllowance(e.getNightHours());
+        int familyAllowance = CalculateUtils.calculateFamilyAllowance(e.getNumberOfFamilyMembers());
+        int basicSalary = CalculateUtils.calculateBasicSalary(e.getBasicSalaryCode());
+        int totalAmount = CalculateUtils.calculateTotalAmount(
+                gradeAllowanceSalary, basicSalary, nightAllowance, familyAllowance
+        );
+        int netIncome = CalculateUtils.calculateNetIncome(gradeAllowanceSalary, totalAmount);
+
+        return new EmployeeOutputDTO(
+                e.getId(),
+                e.getName(),
+                e.getDepartmentCode().description(),
+                e.getBasicSalaryCode(),
+                gradeAllowanceSalary,
+                familyAllowance,
+                nightAllowance,
+                totalAmount,
+                netIncome
+        );
     }
 
 }

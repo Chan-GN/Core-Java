@@ -13,10 +13,22 @@ import java.util.List;
  */
 public class OutputHandler {
 
-    public void displayInit() {
-        System.out.println("------------------------------");
+    public void displayMenu() {
+        System.out.println("-----------------------------");
         System.out.println(" Employee Management Program ");
-        System.out.println("------------------------------");
+        System.out.println("-----------------------------");
+        System.out.println("1. 사원 등록");
+        System.out.println("2. 사원 검색");
+        System.out.println("3. 사원 목록");
+        System.out.println("9. 종   료");
+        System.out.println("----------------------------");
+    }
+
+    public void displayOneEmployee(EmployeeOutputDTO employee) {
+        System.out.printf("%-8s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", "사원 번호", "사원 이름", "부서명",
+                "기본급", "호급 수당", "가족 수당", "야간 수당", "총 금액", "실수령액");
+
+        System.out.println(employee);
     }
 
     public void displayAllEmployees(List<EmployeeOutputDTO> allEmployees) {

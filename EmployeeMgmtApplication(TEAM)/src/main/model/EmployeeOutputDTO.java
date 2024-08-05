@@ -42,4 +42,36 @@ public class EmployeeOutputDTO {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public int getBasicSalaryCode() {
+        return basicSalaryCode;
+    }
+
+    public int getGradeAllowanceSalary() {
+        return gradeAllowanceSalary;
+    }
+
+    public int getFamilyAllowance() {
+        return familyAllowance;
+    }
+
+    public int getNightAllowance() {
+        return nightAllowance;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
+    }
+
+    public int getNetIncome() {
+        return netIncome;
+    }
+
 }
